@@ -21,6 +21,9 @@ public class HotelReservationSystemTest {
         assertEquals("Lakewood",reservationSystem.hotels.get(0).getName());
         assertEquals(110,reservationSystem.hotels.get(0).getRegularWeekDayRate());
 
+
+
+
     }
 
 }

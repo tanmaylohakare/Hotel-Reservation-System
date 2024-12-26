@@ -16,6 +16,11 @@ public class Main
         reservationSystem.addHotel("Ridgewood",220,150);
 
         reservationSystem.displayHotels();
+
+        String result = reservationSystem.findCheapestHotel("10Sep2020","11Sep2020");
+        System.out.println("Cheapest Hotel "+ result);
+
+
      }
 
 }

@@ -1,5 +1,9 @@
 package com.lcwd.test;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.List;
+
 public class Hotel {
 
     private String name;
@@ -40,8 +44,24 @@ public class Hotel {
     public String toString() {
         return "Hotel{" +
                 "name='" + name + '\'' +
-                ", regularWeekDayRate=" + regularWeekDayRate +
-                ", regularWeekendRate=" + regularWeekendRate +
+
                 '}';
+    }
+
+    public int calculateTotalCost(List<LocalDate> dates)
+    {       int totalCost =0;
+
+        for(LocalDate date : dates)
+        {
+            DayOfWeek day= date.getDayOfWeek();
+            if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY)
+            {
+                totalCost += regularWeekendRate;
+            }
+            else {
+                totalCost += getRegularWeekDayRate();
+            }
+        }
+        return  totalCost;
     }
 }
