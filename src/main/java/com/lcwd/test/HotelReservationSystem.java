@@ -88,28 +88,16 @@ public class HotelReservationSystem {
     public String findCheapestBestRatedHotel(String... dateString) {
         List<LocalDate> dates = parseDates(dateString);
 
-        Hotel cheapestBestRatedHotel = null;
-        int minCost = Integer.MAX_VALUE;
+        Hotel bestRatedHotel = Collections.max(hotels, Comparator.comparing(Hotel::getRating));
 
-        for (Hotel hotel : hotels) {
-            int totalCost = hotel.calculateTotalCost(dates);
-
-            // Check if the current hotel has the minimum cost or better rating at the same cost
-            if (totalCost < minCost ||
-                    (totalCost == minCost && (cheapestBestRatedHotel == null || hotel.getRating() > cheapestBestRatedHotel.getRating()))) {
-                minCost = totalCost;
-                cheapestBestRatedHotel = hotel;
-            }
-        }
-
-        if (cheapestBestRatedHotel != null) {
-            return cheapestBestRatedHotel.getName() +
-                    ", Rating: " + cheapestBestRatedHotel.getRating() +
-                    ", Total Rates: $" + minCost;
-        } else {
+        if (bestRatedHotel != null) {
+            int totalCost = bestRatedHotel.calculateTotalCost(dates);
+            return bestRatedHotel.getName() +
+                    ", Rating: " + bestRatedHotel.getRating() +
+                    ", Total Rates: $" + totalCost;
+        }  else {
             return "No hotels available for the given dates!";
         }
     }
-
 
 }
