@@ -2,6 +2,7 @@ package com.lcwd.test;
 
 import org.junit.Test;
 
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertEquals;
 
 public class HotelReservationSystemTest {
@@ -12,8 +13,8 @@ public class HotelReservationSystemTest {
         HotelReservationSystem reservationSystem=new HotelReservationSystem();
 
         //add Hotel
-        reservationSystem.addHotel("Lakewood",110,90);
-        reservationSystem.addHotel("Bridgwood",160,60);
+        reservationSystem.addHotel("Lakewood",110,90,4.2);
+        reservationSystem.addHotel("Bridgwood",160,60,3.8);
 
 
         //to check hotel countn add
