@@ -40,4 +40,29 @@ public class HotelReservationSystem {
         }
     }
 
+
+    public List <LocalDate> parseDates(String... dateString)
+    {
+        DateTimeFormatter formatter =DateTimeFormatter.ofPattern("ddMMMyyyy");
+        List<LocalDate> dates =new ArrayList<>();
+
+        for (String date : dateString)
+        {
+            dates.add(LocalDate.parse(date, formatter));
+        }
+
+        return dates;
+
+    }
+
+    public String findCheapestHotel(String ... dateString)
+    {
+        List<LocalDate> dates= parseDates(dateString);
+        Hotel cheapesHotel = Collections.min(hotels, Comparator.comparing(hotels -> hotels.calculateTotalCost(dates)));
+        int totalCost= cheapesHotel.calculateTotalCost(dates);
+
+        return cheapesHotel.getName()+" , TotalRates $ ="+totalCost;
+    }
+
+
 }

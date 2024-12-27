@@ -17,6 +17,8 @@ public class Main
 
         reservationSystem.displayHotels();
 
+        String result = reservationSystem.findCheapestHotel("10Sep2020","11Sep2020");
+        System.out.println("Cheapest Hotel "+ result);
 
      }
 
