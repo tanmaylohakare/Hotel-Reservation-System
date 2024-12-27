@@ -52,7 +52,7 @@ public class Hotel {
         return "Hotel{" +
                 "name='" + name + '\'' +
                ", regularWeekDayRate=" + regularWeekDayRate +
-
+                ", regularWeekendRate=" + regularWeekendRate +
                 '}';
     }
 
