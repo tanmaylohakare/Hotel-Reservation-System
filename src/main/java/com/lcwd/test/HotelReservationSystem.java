@@ -85,4 +85,31 @@ public class HotelReservationSystem {
 
         return cheapestHotel.getName()+ ", Total WeeKend Rates $ ="+totalCost;
     }
+    public String findCheapestBestRatedHotel(String... dateString) {
+        List<LocalDate> dates = parseDates(dateString);
+
+        Hotel cheapestBestRatedHotel = null;
+        int minCost = Integer.MAX_VALUE;
+
+        for (Hotel hotel : hotels) {
+            int totalCost = hotel.calculateTotalCost(dates);
+
+            // Check if the current hotel has the minimum cost or better rating at the same cost
+            if (totalCost < minCost ||
+                    (totalCost == minCost && (cheapestBestRatedHotel == null || hotel.getRating() > cheapestBestRatedHotel.getRating()))) {
+                minCost = totalCost;
+                cheapestBestRatedHotel = hotel;
+            }
+        }
+
+        if (cheapestBestRatedHotel != null) {
+            return cheapestBestRatedHotel.getName() +
+                    ", Rating: " + cheapestBestRatedHotel.getRating() +
+                    ", Total Rates: $" + minCost;
+        } else {
+            return "No hotels available for the given dates!";
+        }
+    }
+
+
 }
