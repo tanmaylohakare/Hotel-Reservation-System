@@ -40,13 +40,6 @@ public class Hotel {
         this.regularWeekendRate = regularWeekendRate;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Hotel{" +
-//                "name='" + name + '\'' +
-//
-//                '}';
-//    }
     @Override
     public String toString() {
         return "Hotel{" +
@@ -55,7 +48,6 @@ public class Hotel {
                 ", regularWeekendRate=" + regularWeekendRate +
                 '}';
     }
-
 
     public int calculateTotalCost(List<LocalDate> dates)
     {       int totalCost =0;

@@ -17,9 +17,11 @@ public class Main
 
         reservationSystem.displayHotels();
 
-        String result = reservationSystem.findCheapestHotel("10Sep2020","11Sep2020");
-        System.out.println("Cheapest Hotel "+ result);
+        String cheapestWeekdayHotel = reservationSystem.findCheapestHotel("10Sep2020","11Sep2020");
+        System.out.println("Cheapest Hotel Week Days"+ cheapestWeekdayHotel);
 
+        String cheapestWeekendsHotel = reservationSystem.findCheapestHotelsWeekends("30Nov2024","01Jan2020");
+        System.out.println("Cheapest Hotel "+ cheapestWeekendsHotel);
      }
 
 }
