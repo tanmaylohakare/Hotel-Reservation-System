@@ -18,13 +18,16 @@ public class HotelReservationSystem {
         hotels=new ArrayList<>();
     }
 
-    public void addHotel(String name,int regularWeekdayRate,int regularWeekendRate,double rating)
+
+    // Add Hotel Method
+    public void addHotel(String name,int regularWeekdayRate,int regularWeekendRate,double rating,int rewardWeekdayRate, int rewardWeekendRate)
     {
-        Hotel hotel=new Hotel(name,regularWeekdayRate,regularWeekendRate, (int) rating);
+        Hotel hotel=new Hotel(name,regularWeekdayRate,regularWeekendRate, (int) rating, rewardWeekdayRate, rewardWeekendRate );
         hotels.add(hotel);
 
     }
 
+    // display Hotel
     public void displayHotels()
     {
         if(hotels.isEmpty())
@@ -56,6 +59,8 @@ public class HotelReservationSystem {
 
     }
 
+
+    // Find Cheapest Rate Hotel
     public String findCheapestHotel(String ... dateString)
     {
         List<LocalDate> dates= parseDates(dateString);
@@ -65,6 +70,7 @@ public class HotelReservationSystem {
         return cheapesHotel.getName()+" , TotalRates $ ="+totalCost;
     }
 
+    // Find Cheapest Hotels At WeekEnd
     public String findCheapestHotelsWeekends(String...dataString)
     {
         List<LocalDate> dates =parseDates(dataString);
@@ -85,6 +91,8 @@ public class HotelReservationSystem {
 
         return cheapestHotel.getName()+ ", Total WeeKend Rates $ ="+totalCost;
     }
+
+//find Cheapest with best rate
     public String findCheapestBestRatedHotel(String... dateString) {
         List<LocalDate> dates = parseDates(dateString);
 
@@ -100,4 +108,38 @@ public class HotelReservationSystem {
         }
     }
 
-}
+
+    public String findCheapestBestRatedHotelForRewardCustomer(String customerType, String... dateString) {
+        // Validate Customer Type
+        if (!customerType.equalsIgnoreCase("Reward")) {
+            return "Invalid customer type. Only 'Reward' customers are supported.";
+        }
+
+        // Parse Dates
+        List<LocalDate> dates = parseDates(dateString);
+        if (dates.isEmpty()) {
+            return "Invalid date format. Please use 'ddMMMyyyy'.";
+        }
+
+        Hotel cheapestHotel = null;
+        int lowestCost = Integer.MAX_VALUE;
+
+        // Find the cheapest best-rated hotel
+        for (Hotel hotel : hotels) {
+            int cost = hotel.calculateTotalCost(dates);
+
+            if (cost < lowestCost || (cost == lowestCost && hotel.getRating() > (cheapestHotel != null ? cheapestHotel.getRating() : 0))) {
+                lowestCost = cost;
+                cheapestHotel = hotel;
+            }
+        }
+
+        if (cheapestHotel == null) {
+            return "No hotels available for the given dates.";
+        }
+
+        return cheapestHotel.getName() +
+                ", Rating: " + cheapestHotel.getRating() +
+                ", Total Rates: $" + lowestCost;
+    }
+ }
