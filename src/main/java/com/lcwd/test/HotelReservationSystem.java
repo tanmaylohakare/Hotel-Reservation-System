@@ -121,25 +121,47 @@ public class HotelReservationSystem {
             return "Invalid date format. Please use 'ddMMMyyyy'.";
         }
 
-        Hotel cheapestHotel = null;
-        int lowestCost = Integer.MAX_VALUE;
-
-        // Find the cheapest best-rated hotel
-        for (Hotel hotel : hotels) {
-            int cost = hotel.calculateTotalCost(dates);
-
-            if (cost < lowestCost || (cost == lowestCost && hotel.getRating() > (cheapestHotel != null ? cheapestHotel.getRating() : 0))) {
-                lowestCost = cost;
-                cheapestHotel = hotel;
-            }
-        }
+        // Find the cheapest best-rated hotel using stream
+        Hotel cheapestHotel = hotels.stream()
+                .map(hotel -> new HotelWithCost(hotel, hotel.calculateTotalCost(dates))) // Calculate cost for Reward customer
+                .filter(hotel -> hotel.getCost() != Integer.MAX_VALUE) // Filter out invalid costs
+                .min(Comparator.comparingInt(HotelWithCost::getCost) // Sort by lowest cost
+                        .thenComparing(HotelWithCost::getHotelRating)) // If costs are equal, sort by rating
+                .map(HotelWithCost::getHotel)
+                .orElse(null); // If no hotel found, return null
 
         if (cheapestHotel == null) {
             return "No hotels available for the given dates.";
         }
 
+        int totalCost = cheapestHotel.calculateTotalCost(dates);
         return cheapestHotel.getName() +
                 ", Rating: " + cheapestHotel.getRating() +
-                ", Total Rates: $" + lowestCost;
+                ", Total Rates: $" + totalCost;
     }
- }
+
+
+    // Helper class to encapsulate a hotel and its total cost for sorting
+    private static class HotelWithCost {
+        private final Hotel hotel;
+        private final int cost;
+
+        public HotelWithCost(Hotel hotel, int cost) {
+            this.hotel = hotel;
+            this.cost = cost;
+        }
+
+        public Hotel getHotel() {
+            return hotel;
+        }
+
+        public int getCost() {
+            return cost;
+        }
+
+        public int getHotelRating() {
+            return (int) hotel.getRating();
+        }
+    }
+
+}
