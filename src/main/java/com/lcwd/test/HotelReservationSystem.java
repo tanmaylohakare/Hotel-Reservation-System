@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class HotelReservationSystem {
@@ -26,6 +27,14 @@ public class HotelReservationSystem {
         hotels.add(hotel);
 
     }
+
+    // Validate Date Format Using Regex (ddMMMyyyy)
+    private boolean isValidDateFormat(String date) {
+        String regex = "^\\d{2}[A-Za-z]{3}\\d{4}$";
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(date).matches();
+    }
+
 
     // display Hotel
     public void displayHotels()
@@ -163,5 +172,4 @@ public class HotelReservationSystem {
             return (int) hotel.getRating();
         }
     }
-
 }
